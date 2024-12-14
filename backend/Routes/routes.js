@@ -74,17 +74,17 @@ router.post("/notifications/create", async (req, res) => {
     switch (type) {
       
       case 'comment':
-        const message = `${name} commented on your post "${postContent.slice(0, 300)}..."`; // Limit content to 300 characters
-        notificationData.postContent = message; // Content of the post for reference
+       
+        notificationData.postContent = postContent; // Content of the post for reference
         break;
       case 'invite':
-        const message1 = `${name} invited you to ${inviteEvent}`;
-        notificationData.inviteEvent = message1; // Event name for the invite
+       
+        notificationData.inviteEvent = inviteEvent; // Event name for the invite
         break;
       
       case 'mention':
-        const message2 = `${name} mentioned you in a post "${postContent.slice(0, 300)}..."`; // Limit content to 300 characters
-        notificationData.postContent = message2; // Content of the post for reference
+        
+        notificationData.postContent = postContent; // Content of the post for reference
         break;
       default:
          console.log("invalid notification")

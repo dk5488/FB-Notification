@@ -49,10 +49,12 @@ Notification.watch().on('change', async (change) => {
     // Push the new notification to connected clients
     io.emit('notification', {
       id: newNotification._id,
-      title: newNotification.title,
       name: newNotification.name,
       type: newNotification.type,
-      date: newNotification.createdAt,
+      createdAt: newNotification.createdAt,
+      postContent:newNotification.postContent || null,
+      inviteEvent:newNotification.postContent || null,
+      read:newNotification.read
     });
   }
 });

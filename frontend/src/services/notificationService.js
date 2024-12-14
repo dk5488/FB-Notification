@@ -21,11 +21,20 @@ export const markAllAsRead = async () => {
 };
 
 export const listenForNotifications = (callback) => {
-  const socket = io('http://localhost:5000'); // Adjust according to backend WebSocket server
-
-  socket.on('notification', (notification) => {
-    callback(notification);
-  });
-
-  return socket;
-};
+    const socket = io('http://localhost:5000'); // Backend WebSocket server URL
+  
+    socket.on('connect', () => {
+      console.log('Connected to WebSocket server');
+    });
+  
+    socket.on('disconnect', () => {
+      console.log('Disconnected from WebSocket server');
+    });
+  
+    socket.on('notification', (notification) => {
+      console.log('Received notification:', notification);
+      callback(notification);
+    });
+  
+    return socket;
+  };

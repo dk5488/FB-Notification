@@ -14,7 +14,15 @@ const NotificationList = () => {
 
       setIsLoading(true);
       const data = await getUnreadNotifications(page, 10);
-      setNotifications((prev) => [...prev, ...data.notifications]); // Append new notifications
+      console.log('getUnreadNotifications Data::', data);
+      // Avoid duplicates when appending new notifications
+      setNotifications((prev) => {
+        const newNotifications = data.notifications.filter(
+          (notif) => !prev.some((existing) => existing.id === notif.id)
+        );
+        return [...prev, ...newNotifications];
+      });
+
       setTotalPages(data.pages);
       setIsLoading(false);
     };
@@ -25,13 +33,21 @@ const NotificationList = () => {
   useEffect(() => {
     // Set up WebSocket to listen for new notifications
     const socket = listenForNotifications((newNotification) => {
-      setNotifications((prev) => [newNotification, ...prev]); // Add new notifications to the top
+      // Add new notification only if it doesn't already exist
+      setNotifications((prev) => {
+        const exists = prev.some((notif) => notif.id === newNotification.id);
+        return exists ? prev : [newNotification, ...prev];
+      });
     });
 
     return () => {
       socket.disconnect(); // Clean up WebSocket on component unmount
     };
   }, []);
+
+  useEffect(() => {
+    console.log('Reload');
+  }, [notifications]);
 
   // Infinite scroll handler
   const handleScroll = () => {
