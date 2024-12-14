@@ -5,6 +5,7 @@ import {
   faBell,
   faTv,
   faStore,
+  faUserGroup
 } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
 
@@ -15,10 +16,11 @@ const Navbar = () => {
       <FaHome className="text-xl cursor-pointer" />
 
       {/* FontAwesome Icons */}
+      <FontAwesomeIcon icon={faUserGroup} className="text-xl cursor-pointer"/>
       <FontAwesomeIcon icon={faFacebookMessenger} className="text-xl cursor-pointer" />
       <FontAwesomeIcon icon={faBell} className="text-xl cursor-pointer" />
       <FontAwesomeIcon icon={faTv} className="text-xl cursor-pointer" />
-      <FontAwesomeIcon icon={faStore} className="text-xl cursor-pointer" />
+      <FontAwesomeIcon icon={faStore} className="text-xl cursor-pointer"/>
     </div>
   );
 };

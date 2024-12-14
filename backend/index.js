@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
-const Notification = require('./models/Notification'); // Notification model
+const Notification = require('./models/Notification'); 
 const connectDB = require('./db');
 const dotenv = require('dotenv');
 const routes=require('./Routes/routes')
@@ -12,27 +12,27 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*', // Adjust based on your frontend origin
+    origin: '*', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   },
 });
 app.use(cors({
-    origin: '*',           // Allow all origins
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow specific methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
+    origin: '*',           
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    allowedHeaders: ['Content-Type', 'Authorization'], 
   }));
 
-// Connect to MongoDB
+
 connectDB();
 
 // Middleware
 app.use(express.json());
 app.use('/api/v1', (req, res, next) => {
-    req.io = io; // Attach `io` to the request object
+    req.io = io; 
     next();
   }, routes);
 
-// WebSocket Connection
+
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
 
@@ -41,12 +41,12 @@ io.on('connection', (socket) => {
   });
 });
 
-// Mongoose Middleware to Watch for New Notifications
+
 Notification.watch().on('change', async (change) => {
   if (change.operationType === 'insert') {
     const newNotification = change.fullDocument;
 
-    // Push the new notification to connected clients
+    
     io.emit('notification', {
       id: newNotification._id,
       name: newNotification.name,

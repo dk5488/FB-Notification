@@ -14,7 +14,7 @@ const NotificationsPage = () => {
     <div>
       <Navbar />
       <h1 className="text-center text-2xl font-bold py-4">Notifications</h1>
-      <MarkAllReadButton markAllAsRead={handleMarkAllAsRead} />
+      <MarkAllReadButton markAllAsRead={handleMarkAllAsRead} className="sticky"/>
       <NotificationList />
     </div>
   );

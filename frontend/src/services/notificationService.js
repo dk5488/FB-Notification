@@ -4,7 +4,7 @@ import { io } from 'socket.io-client';
 export const getUnreadNotifications = async (page = 1, limit = 10) => {
     try {
       const response = await axiosInstance.get(`/notifications/unread?page=${page}&limit=${limit}`);
-      return response.data; // Includes notifications, total, page, and pages
+      return response.data; 
     } catch (error) {
       console.error("Error fetching notifications:", error);
       return { notifications: [], total: 0, page, pages: 0 };
@@ -21,7 +21,7 @@ export const markAllAsRead = async () => {
 };
 
 export const listenForNotifications = (callback) => {
-    const socket = io('http://localhost:5000'); // Backend WebSocket server URL
+    const socket = io('http://localhost:5000'); 
   
     socket.on('connect', () => {
       console.log('Connected to WebSocket server');
@@ -37,4 +37,13 @@ export const listenForNotifications = (callback) => {
     });
   
     return socket;
+  };
+
+
+  export const markNotificationAsRead = async (id) => {
+    await axiosInstance.put(`/notifications/${id}/mark-read`);
+  };
+  
+  export const deleteNotification = async (id) => {
+    await axiosInstance.delete(`/notifications/${id}/delete`);
   };
