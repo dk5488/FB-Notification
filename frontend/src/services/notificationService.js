@@ -21,7 +21,7 @@ export const markAllAsRead = async () => {
 };
 
 export const listenForNotifications = (callback) => {
-    const socket = io('http://localhost:5000'); 
+    const socket = io('https://fb-notification-backend1.onrender.com'); 
   
     socket.on('connect', () => {
       console.log('Connected to WebSocket server');
