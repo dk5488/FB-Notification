@@ -1,15 +1,16 @@
 import axiosInstance from './axiosInstance';
 import { io } from 'socket.io-client';
 
-export const getUnreadNotifications = async () => {
-  try {
-    const response = await axiosInstance.get('/notifications');
-    return response.data.notifications;
-  } catch (error) {
-    console.error('Error fetching notifications:', error);
-    return [];
-  }
-};
+export const getUnreadNotifications = async (page = 1, limit = 10) => {
+    try {
+      const response = await axiosInstance.get(`/notifications/unread?page=${page}&limit=${limit}`);
+      return response.data; // Includes notifications, total, page, and pages
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+      return { notifications: [], total: 0, page, pages: 0 };
+    }
+  };
+  
 
 export const markAllAsRead = async () => {
   try {
